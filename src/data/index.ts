@@ -1,0 +1,27 @@
+import type { Difficulty } from '../types/game';
+import type { WordEntry } from '../types/word';
+import { EASY_ANSWER_LIST, EASY_VALID_WORDS } from './words-easy';
+import { NORMAL_ANSWER_LIST, NORMAL_VALID_WORDS } from './words-normal';
+import { HARD_ANSWER_LIST, HARD_VALID_WORDS } from './words-hard';
+
+interface WordList {
+  answers: WordEntry[];
+  validWords: Set<string>;
+}
+
+export function getWordList(difficulty: Difficulty): WordList {
+  switch (difficulty) {
+    case 'easy':
+      return { answers: EASY_ANSWER_LIST, validWords: EASY_VALID_WORDS };
+    case 'normal':
+      return { answers: NORMAL_ANSWER_LIST, validWords: NORMAL_VALID_WORDS };
+    case 'hard':
+      return { answers: HARD_ANSWER_LIST, validWords: HARD_VALID_WORDS };
+  }
+}
+
+export function getRandomWord(difficulty: Difficulty): WordEntry {
+  const { answers } = getWordList(difficulty);
+  const index = Math.floor(Math.random() * answers.length);
+  return answers[index]!;
+}
